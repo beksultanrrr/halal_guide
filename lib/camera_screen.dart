@@ -6,6 +6,7 @@ import 'package:google_ml_kit/google_ml_kit.dart';
 import 'package:halal_guide/result_screen.dart';
 import 'package:permission_handler/permission_handler.dart';
 
+
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
 
@@ -118,13 +119,15 @@ class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
                               ),
                               padding: const EdgeInsets.all(20),
                             ),
-                            onPressed: () {
+                            onPressed: () async{
+                             
                               _scanImage().then((recognizedText) {
                                 showModalBottomSheet(
+                                  
                                   backgroundColor: Colors.transparent,
                                   context: context,
                                   builder: (context) => ResultScreen(
-                                    text: recognizedText,
+                                    text: recognizedText
                                   ),
                                 );
                               });
@@ -210,6 +213,7 @@ class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
       await GoogleMlKit.vision.textRecognizer().processImage(inputImage);
 
       final recognizedText = await _textRecognizer.processImage(inputImage);
+      
 
       return recognizedText.text;
     } catch (e) {
